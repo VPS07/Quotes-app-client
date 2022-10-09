@@ -8,7 +8,7 @@ export default function Card(props) {
   const { editingId, setEditingId } = useContext(CardContext);
   return (
     <>
-      {editingId == props.id ? (
+      {editingId === props.id ? (
         ""
       ) : (
         <div className="card">
