@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "../config";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRef } from "react";
@@ -19,7 +19,7 @@ export default function Cards() {
   const textareaRef = useRef();
 
   function getData() {
-    axios.get("/crudapp").then((res) => {
+    axiosInstance.get("/crudapp").then((res) => {
       setCrudData(res.data);
       // console.log(res.data);
     });
@@ -37,7 +37,7 @@ export default function Cards() {
 
   // add on button click
   function handleClick() {
-    axios
+    axiosInstance
       .post("/crudapp", {
         name: inputRef.current.value,
         quote: textareaRef.current.value,
@@ -54,7 +54,7 @@ export default function Cards() {
 
   // delete the data from api
   function deleteData(id) {
-    axios
+    axiosInstance
       .delete(`/crudapp/${id}`)
       .then((res) => {
         // console.log(res);
@@ -73,7 +73,7 @@ export default function Cards() {
   }
 
   function editHandleClick() {
-    axios
+    axiosInstance
       .patch(`/crudapp/${editProp.id}`, {
         name: inputRef.current.value,
         quote: textareaRef.current.value,
