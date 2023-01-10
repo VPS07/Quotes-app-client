@@ -15,13 +15,11 @@ function App() {
   function getData() {
     axiosInstance.get("/crudapp").then((res) => {
       setQuotes(res.data);
-      console.log(res.data);
     });
   }
 
   useEffect(() => {
     getData();
-    console.log("hello");
   }, []);
 
   return (
