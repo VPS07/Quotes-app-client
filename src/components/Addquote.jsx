@@ -1,9 +1,35 @@
-import { useContext } from "react";
-import { CardContext } from "./Cards";
+import { useContext, useRef } from "react";
+import { CardContext } from "../App";
+import axiosInstance from "../config";
 
 export default function Addquote() {
-  const { inputRef, textareaRef, editProp, editHandleClick, handleClick } =
-    useContext(CardContext);
+  const inputRef = useRef();
+  const textareaRef = useRef();
+  const { getData } = useContext(CardContext);
+
+  // reset the input box after click
+  function resetInput() {
+    inputRef.current.value = "";
+    textareaRef.current.value = "";
+  }
+
+  //add quote to database
+  function handleClick() {
+    axiosInstance
+      .post("/crudapp", {
+        name: inputRef.current.value,
+        quote: textareaRef.current.value,
+      })
+      .then((res) => {
+        // console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => getData());
+    resetInput();
+  }
+
   return (
     <>
       <div className="inputboxs">
@@ -21,7 +47,7 @@ export default function Addquote() {
           ref={textareaRef}
         ></textarea>
       </div>
-      <button onClick={editProp.isEdit ? editHandleClick : handleClick}>
+      <button onClick={handleClick}>
         Add
       </button>
     </>
